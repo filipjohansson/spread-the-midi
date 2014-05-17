@@ -14,7 +14,12 @@ data = json.load(req)
 
 def bg_cb(sess, resp):
     # parse the json storing the result on the response object
+    global data
+    hej = data
     data = resp.json()
+
+    if data != hej: 
+        print data
 
 def playNotesOnColumn(col):
     #req = requests.get(url)
