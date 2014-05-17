@@ -29,14 +29,17 @@ def playNotesOnColumn(col):
     #data = req.json()
     #data = json.load(req)
     foundNote = False
-    for j in data["feed"]["entry"]:
-        if(j["gs$cell"]["col"] == str(col)):
-            foundNote = True
-            playNote(j["gs$cell"]["$t"])
+    try:
+        for j in data["feed"]["entry"]:
+            if(j["gs$cell"]["col"] == str(col)):
+                foundNote = True
+                playNote(j["gs$cell"]["$t"])
 
-    if not foundNote:
-        time.sleep(noteLength)
-        print 'Sover!'
+        if not foundNote:
+            time.sleep(noteLength)
+            print 'Sover!'
+    except:
+        print 'No data in spreadsheet'
 
 def playNote(note):
     global midiout
