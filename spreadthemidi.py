@@ -2,18 +2,14 @@ import time
 import rtmidi
 import sys
 import json
-
 import urllib2
-import json
-
-
-
 from pprint import pprint
 
-req = urllib2.urlopen("https://spreadsheets.google.com/feeds/cells/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/od6/public/values?alt=json")
-data = json.load(req)
+url = "https://spreadsheets.google.com/feeds/cells/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/od6/public/values?alt=json"
 
 def playNotesOnColumn(col):
+    req = urllib2.urlopen(url)
+    data = json.load(req)
     for j in data["feed"]["entry"]:
         if(j["gs$cell"]["col"] == str(col)):
             playNote(j["gs$cell"]["$t"])
@@ -39,7 +35,6 @@ except:
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
-print available_ports
 
 if available_ports:
     midiout.open_port(1)
@@ -49,10 +44,7 @@ else:
 
 with open('midinotetable.json') as data_file:
     notetable = json.load(data_file)
-#pprint(data)
 
-
-#playNote('C3')
 
 step = 0;
 while True:
@@ -61,12 +53,9 @@ while True:
         if(step > 7):
             step = 0
 
-        
-
-         print available_ports
-         playNotesOnColumn(step+1)
-         time.sleep(1)
-         step++
+        playNotesOnColumn(step+1)
+        #time.sleep(1)
+        step+=1
 
      except KeyboardInterrupt:
          del midiout
