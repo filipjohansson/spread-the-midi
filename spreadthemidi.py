@@ -13,14 +13,11 @@ session = FuturesSession()
 
 
 
-#inputurl = "1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/edit?usp=sharing"
-#url = 'abcdc.com'
-#url = re.sub('\https://docs.google.com/spreadsheets/d/$', '', url)
-#url = re.sub('\/edit?usp=sharing$', '', url)
+inputurl = "https://docs.google.com/spreadsheets/d/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/edit?usp=sharing"
+slicedUrl = inputurl[39:-17]
+print slicedUrl
 
-
-
-url = "https://spreadsheets.google.com/feeds/cells/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/od6/public/values?alt=json"
+url = "https://spreadsheets.google.com/feeds/cells/"+slicedUrl+"/od6/public/values?alt=json"
 req = urllib2.urlopen(url)
 data = json.load(req)
 
