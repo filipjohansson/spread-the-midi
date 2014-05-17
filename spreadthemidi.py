@@ -8,13 +8,19 @@ from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
 noteLength = 0.3
+bars = 16
+midiPort = 1
 
 session = FuturesSession()
 
+try:
+    spreadesheet_url = sys.argv[1]
+    print spreadesheet_url
+except:
+    print 'Error: No URL given.'
 
-
-inputurl = "https://docs.google.com/spreadsheets/d/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/edit?usp=sharing"
-slicedUrl = inputurl[39:-17]
+# inputurl = "https://docs.google.com/spreadsheets/d/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/edit?usp=sharing"
+slicedUrl = spreadesheet_url[39:-17]
 print slicedUrl
 
 url = "https://spreadsheets.google.com/feeds/cells/"+slicedUrl+"/od6/public/values?alt=json"
@@ -27,7 +33,7 @@ def bg_cb(sess, resp):
     hej = data
     data = resp.json()
 
-    if data != hej: 
+    if data != hej:
         print data
 
 def playNotesOnColumn(col):
@@ -53,19 +59,13 @@ def playNote(note):
     time.sleep(noteLength)
     midiout.send_message(note_off)
 
-try:
-    spreadesheet_url = sys.argv[1]
-    print spreadesheet_url
-except:
-    print 'Error: No URL given.'
-
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
 
 
 if available_ports:
-    midiout.open_port(1)
+    midiout.open_port(midiPort)
 else:
     midiout.open_virtual_port("My virtual output")
 
@@ -77,8 +77,8 @@ with open('midinotetable.json') as data_file:
 step = 0;
 while True:
      try:
-        
-        if(step > 7):
+
+        if(step > bars-1):
             step = 0
 
         playNotesOnColumn(step+1)
