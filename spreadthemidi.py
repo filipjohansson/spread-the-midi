@@ -1,6 +1,8 @@
 import time
 import rtmidi
 import sys
+import json
+from pprint import pprint
 
 try:
     spreadesheet_url = sys.argv[1]
