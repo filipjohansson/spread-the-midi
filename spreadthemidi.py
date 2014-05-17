@@ -7,6 +7,8 @@ import re
 from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
+noteLength = 0.3
+
 session = FuturesSession()
 
 
@@ -33,9 +35,15 @@ def bg_cb(sess, resp):
 
 def playNotesOnColumn(col):
     future = session.get(url, background_callback=bg_cb)
+    foundNote = False
     for j in data["feed"]["entry"]:
         if(j["gs$cell"]["col"] == str(col)):
+            foundNote = True
             playNote(j["gs$cell"]["$t"])
+
+    if not foundNote:
+        time.sleep(noteLength)
+        print 'Sover!'
 
 def playNote(note):
     global midiout
@@ -45,7 +53,7 @@ def playNote(note):
     note_on = [0x90, notenumber, 112] # channel 1, middle C, velocity 112
     note_off = [0x80, notenumber, 0]
     midiout.send_message(note_on)
-    time.sleep(0.5)
+    time.sleep(noteLength)
     midiout.send_message(note_off)
 
 try:
