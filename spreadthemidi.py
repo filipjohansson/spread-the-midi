@@ -3,13 +3,24 @@ import rtmidi
 import sys
 import json
 import urllib2
+from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
+session = FuturesSession()
+
 url = "https://spreadsheets.google.com/feeds/cells/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/od6/public/values?alt=json"
+req = urllib2.urlopen(url)
+data = json.load(req)
+
+def bg_cb(sess, resp):
+    # parse the json storing the result on the response object
+    data = resp.json()
 
 def playNotesOnColumn(col):
-    req = urllib2.urlopen(url)
-    data = json.load(req)
+    #req = requests.get(url)
+    future = session.get(url, background_callback=bg_cb)
+    #data = req.json()
+    #data = json.load(req)
     for j in data["feed"]["entry"]:
         if(j["gs$cell"]["col"] == str(col)):
             playNote(j["gs$cell"]["$t"])
