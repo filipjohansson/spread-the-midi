@@ -30,8 +30,11 @@ def bg_cb(sess, resp):
     hej = data
     data = resp.json()
 
-    if data != hej:
-        print data
+    print float(data["feed"]["title"]["$t"])
+    noteLength = float(data["feed"]["title"]["$t"]) / bpm / bpb
+
+    #if data != hej:
+        
 
 def playNotesOnColumn(col):
     future = session.get(url, background_callback=bg_cb)
