@@ -2,9 +2,9 @@ import time, rtmidi, sys, json, urllib2, re
 from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
-bpm = 120
-bpb = 4
-noteLength = 60 / bpm / bpb
+bpm = 120.0
+bpb = 4.0
+noteLength = float(60.0/bpm/bpb)
 bars = 16
 midiPort = 0
 
@@ -33,11 +33,12 @@ data = json.load(req)
 def bg_cb(sess, resp):
     # parse the json storing the result on the response object
     global data
+    global noteLength 
     hej = data
     data = resp.json()
 
-    print float(data["feed"]["title"]["$t"])
-    noteLength = float(data["feed"]["title"]["$t"]) / bpm / bpb
+    
+    noteLength = 60.0/float(data["feed"]["title"]["$t"])/float(bpb)
 
     #if data != hej:
 
