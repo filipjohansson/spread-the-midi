@@ -1,2 +1,5 @@
+futures==2.1.6
 python-rtmidi==0.4.3b1
+requests==2.3.0
+requests-futures==0.9.4
 wsgiref==0.1.2

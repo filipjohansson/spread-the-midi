@@ -16,6 +16,12 @@ try:
 except:
     print 'Error: No URL given.'
 
+try:
+    midiPort = sys.argv[2]
+    print 'Midi port: ' + str(midiPort)
+except:
+    print 'Warning: No Midi port given, falling back to ' + str(midiPort)
+
 # inputurl = "https://docs.google.com/spreadsheets/d/1poWnTI6BpJtYMmcGtOE33Kqes6yzQmw46jJwXttsPu0/edit?usp=sharing"
 slicedUrl = spreadesheet_url[39:-17]
 print slicedUrl
@@ -34,7 +40,7 @@ def bg_cb(sess, resp):
     noteLength = float(data["feed"]["title"]["$t"]) / bpm / bpb
 
     #if data != hej:
-        
+
 
 def playNotesOnColumn(col):
     future = session.get(url, background_callback=bg_cb)
