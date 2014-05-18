@@ -2,7 +2,9 @@ import time, rtmidi, sys, json, urllib2, re
 from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
-noteLength = 0.1
+bpm = 120
+bpb = 4
+noteLength = 60 / bpm / bpb
 bars = 16
 midiPort = 0
 
