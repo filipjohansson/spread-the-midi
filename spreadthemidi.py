@@ -3,7 +3,7 @@ from requests_futures.sessions import FuturesSession
 from pprint import pprint
 
 noteLength = 0.1
-bars = 16
+bars = 64
 midiPort = 0
 
 session = FuturesSession()
