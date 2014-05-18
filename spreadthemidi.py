@@ -17,7 +17,7 @@ except:
     print 'Error: No URL given.'
 
 try:
-    midiPort = sys.argv[2]
+    midiPort = int(sys.argv[2])
     print 'Midi port: ' + str(midiPort)
 except:
     print 'Warning: No Midi port given, falling back to ' + str(midiPort)
@@ -33,11 +33,11 @@ data = json.load(req)
 def bg_cb(sess, resp):
     # parse the json storing the result on the response object
     global data
-    global noteLength 
+    global noteLength
     hej = data
     data = resp.json()
 
-    
+
     noteLength = 60.0/float(data["feed"]["title"]["$t"])/float(bpb)
 
     #if data != hej:
